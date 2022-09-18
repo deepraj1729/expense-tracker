@@ -137,7 +137,7 @@ async def deleteTransaction(id:str):
         )
 
 
- #Delete Trnasaction
+#Delete collection (overall transactions)
 @transaction_router.delete("/transactions")
 async def deleteAllTransactions():
     entity = Transaction()
