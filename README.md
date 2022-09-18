@@ -1,8 +1,11 @@
 # Expense-Tracker
 An expense tracker built with FARM stack (FastAPI,React,MongoDB)
 
+![frontend](media/frontend.png)
+
 ## Requirements
 - Docker
+- Docker-Compose
 
 ## Install and Run
 To install and run the application, use `docker-compose` as given below:
@@ -15,6 +18,9 @@ To install and run the application, use `docker-compose` as given below:
 
         make compose_up
 
+> A demo CLI after running `docker-compose`
+![cli](media/cli.png)
+
 2. To delete or remove the containers (api+db):
 
         docker-compose down
@@ -22,6 +28,13 @@ To install and run the application, use `docker-compose` as given below:
 > To make this command easier
 
         make compose_down
+
+> Shut application
+![makefile](media/makefile.png)
+
+
+> Running Containers
+![docker](media/docker.png)
 
 
 ## Architecture
