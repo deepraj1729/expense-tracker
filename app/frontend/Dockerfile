@@ -1,18 +1,18 @@
-FROM python:3.9.0-alpine
+#Import base node image
+FROM node:16.13-alpine
 
 # The source directory
-WORKDIR /code
+WORKDIR /app
 
-#Copy requirements
-COPY requirements.txt /code/requirements.txt
+# Copy the package.json and package-lock.json
+COPY package.json .
+COPY package-lock.json .
 
-#Install the required packages
-RUN pip install --no-cache-dir -r /code/requirements.txt
+# Install the packages
+RUN npm install
 
-#Copy the remaing files and folders
-COPY ./.env /code/.env
+# Copy the rest of the source code
+COPY . .
 
-COPY ./app /code/app
-
-#Entrypoint
-CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8000"]
+# Gets Executed when we run the image in the container (entrypoint)
+CMD ["npm","run","start"]

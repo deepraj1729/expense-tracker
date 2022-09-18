@@ -35,3 +35,4 @@ The architecture of the backend is as follows:
 - CI/CD: `Github Actions`
 - Container: `Docker`
 - Workflow: `Docker-Compose`
+

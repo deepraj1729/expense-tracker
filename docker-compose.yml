@@ -35,3 +35,21 @@ services:
       - ~/mongo/data:/data/db
     env_file:
       - "./app/db/.env"
+  
+  expense_ui:
+    container_name: expense_ui
+    build:
+      context: ./app/frontend
+      dockerfile: Dockerfile
+
+    ports:
+      - "3000:3000"
+    
+    volumes:
+      - "./app/frontend/src:/app/src"
+    
+    env_file:
+      - "./app/frontend/.env"
+
+    depends_on:
+      - expense_api

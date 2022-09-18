@@ -1,6 +1,7 @@
 .git
-.gitignore
-__pycache__/
+build
+node_modules/
+Dockerfile
 .dockerignore
-LICENSE
 README.md
+Makefile
