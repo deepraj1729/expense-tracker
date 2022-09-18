@@ -16,17 +16,17 @@ def parseDate(date):
     return month,year
 
 
-def modifyData(prev_data):
-    month,year = parseDate(prev_data["trans_date"])
+def modifyData(prev_data:dict):
+    month,year = parseDate(prev_data["date"])
     return (
         {
-            "trans_date": prev_data["trans_date"],
+            "trans_date": prev_data["date"],
             "trans_month": MONTH_LIST[month-1],
             "trans_year": year,
-            "trans_amount": prev_data["trans_amount"],
-            "trans_type": prev_data["trans_type"],
-            "trans_tag": prev_data["trans_tag"],
-            "trans_remarks": prev_data["trans_remarks"]
+            "trans_amount": prev_data["amount"],
+            "trans_type": prev_data["type"],
+            "trans_tag": prev_data["tag"],
+            "trans_remarks": prev_data["remarks"]
         }
     )
 

@@ -1,4 +1,6 @@
+from controller.transaction import TransactionController
 from models.model import TransactionRequestBody
+from utils.migration import modifyData
 from config.db import transaction_collection
 from schemas.schema import TransSchema
 from bson import ObjectId
@@ -22,6 +24,10 @@ class Transaction:
     def getByID(self,id:str):
         return TransSchema(self.collection.find({"_id":ObjectId(id)}))
 
+    def getDashboardByMonth(self,month:str):
+        controller = TransactionController()
+        monthly_transactions = TransSchema(self.collection.find({"trans_month":month}))
+        return controller.getTransactionData(month=month,transactionList=monthly_transactions)
 
     def getAll(self):
         return TransSchema(self.collection.find())
@@ -30,7 +36,8 @@ class Transaction:
         return TransSchema(self.collection.find({"trans_month":month}))
 
     def addOne(self,transaction:TransactionRequestBody):
-        transaction_id = self.collection.insert_one(transaction).inserted_id
+        modified_transaction = modifyData(transaction)  #Adds month and year field
+        transaction_id = self.collection.insert_one(modified_transaction).inserted_id
         return transaction_id
 
     def addMany(self,transactions:dict):

@@ -24,8 +24,11 @@ async def getOverallDashboard():
 
 @dashboard_router.get("/dashboard/{month}")
 async def getAnalysis(month:str):
+    entity = Transaction()
+    data = entity.getDashboardByMonth(month)
+
     return ResponseBody(
         status="200 ok",
         message="All the transactions",
-        data={"month":month,"expense":20000,"invested":35000,"savings":5000}
+        data=data
     )

@@ -12,13 +12,11 @@ class TransactionModel(BaseModel):
 
 
 class TransactionRequestBody(BaseModel):
-    trans_date:str
-    trans_month:str             #Transaction Month
-    trans_year: str             #Transaction Year
-    trans_amount: str
-    trans_type: str
-    trans_tag: str
-    trans_remarks: str
+    date:str
+    amount: float
+    type: str
+    tag: str
+    remarks: str
 
 
 class RequestBody(TransactionModel):
