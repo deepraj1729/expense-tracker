@@ -1,0 +1,6 @@
+.git
+.gitignore
+__pycache__/
+.dockerignore
+LICENSE
+README.md

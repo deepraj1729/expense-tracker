@@ -1,0 +1,37 @@
+version: "3"
+services:
+  expense_api:
+    container_name: expense_api
+    #-it flag (for older versions of react)
+    stdin_open: true
+    tty: true
+
+    #Build from current directory
+    build:
+      context: ./app/api
+      dockerfile: Dockerfile
+      
+    #ports
+    ports:
+      - "8000:8000"
+
+    #Bind mount
+    volumes:
+      - "./app/api:/api"
+    
+    #Environment variables
+    env_file:
+      - "./app/api/.env"
+    
+    depends_on:
+      - expense_db
+  
+  expense_db:
+    image: mongo:latest
+    container_name: expense_db
+    ports: 
+     - "27017:27017"
+    volumes:
+      - ~/mongo/data:/data/db
+    env_file:
+      - "./app/db/.env"
