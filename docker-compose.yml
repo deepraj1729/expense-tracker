@@ -53,3 +53,16 @@ services:
 
     depends_on:
       - expense_api
+  
+  expense-prod-ui:
+    container_name: expense_prod_ui
+    build:
+      context: ./app/frontend
+      dockerfile: Dockerfile.prod
+
+    ports:
+      - "4000:4000"
+    env_file:
+      - "./app/frontend/.env"
+    environment:
+      NODE_ENV: production

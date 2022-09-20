@@ -1,5 +1,4 @@
 .git
-build
 node_modules/
 Dockerfile
 .dockerignore

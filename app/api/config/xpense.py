@@ -22,7 +22,7 @@ class XpenseConfig:
         MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
     
     class API:
-        DEV_URL= "http://localhost:8000"
+        DEV_URL= "http://0.0.0.0:8000"
         PROD_URL="https://xpense-api.herokuapp.com"
         ENDPOINTS = {
             "add":"/add",
@@ -37,7 +37,8 @@ class XpenseConfig:
         
         CORS_ORIGINS = [
             "http://localhost:8080",
-            "http://localhost:3000"
+            "http://localhost:3000",
+            "http://localhost:4000"
         ]
     
     class IO:

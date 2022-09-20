@@ -14,5 +14,7 @@ RUN npm install
 # Copy the rest of the source code
 COPY . .
 
+EXPOSE 3000
+
 # Gets Executed when we run the image in the container (entrypoint)
 CMD ["npm","run","start"]
