@@ -49,7 +49,7 @@ services:
       - "./app/frontend/src:/app/src"
     
     env_file:
-      - "./app/frontend/.env"
+      - "./app/frontend/.env.wsl"
 
     depends_on:
       - api

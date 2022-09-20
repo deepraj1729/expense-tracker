@@ -37,19 +37,17 @@ services:
       - "./app/db/.env"
   
   web:
-    container_name: expense_web
+    container_name: expense_prod_ui
     build:
       context: ./app/frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
 
     ports:
-      - "3000:3000"
-    
-    volumes:
-      - "./app/frontend/src:/app/src"
-    
+      - "4000:4000"
     env_file:
       - "./app/frontend/.env"
 
+    environment:
+      NODE_ENV: production
     depends_on:
       - api
