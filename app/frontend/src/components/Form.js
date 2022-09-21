@@ -1,20 +1,24 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import {default as api} from '../store/apiTrackerX';
-// import { getCurrentDateAndMonth } from '../helpers/config';
+import { getCurrentDateAndMonth } from '../helpers/config';
 
 
 export default function Form() {
   const {register,handleSubmit,resetField} = useForm();
   const [addTransaction] = api.useAddTransactionMutation();
+  const {curr_date, curr_month, month_list} = getCurrentDateAndMonth();  
 
-//   const {curr_date, curr_month, month_list} = getCurrentDateAndMonth()
+  const handleDate = (date) => {
+    let date_arr = date.split('-');
+    let new_date = ""+date_arr[2]+"/"+date_arr[1]+"/"+date_arr[0]
+    console.log(new_date);
+    return new_date;
+  }
 
   const handleUserInput = (inpData) => {
     const inpObj = inpData;
-    let date_arr = inpData.date.split('-');
-    let new_date = ""+date_arr[2]+"/"+date_arr[1]+"/"+date_arr[0]
-    inpObj.date = new_date
+    inpObj.date = handleDate(inpData.date)
     return inpObj
   }
 
@@ -37,8 +41,8 @@ export default function Form() {
                     <input type="date" {...register('date')} placeholder='Select Date' className='form-input' />
                 </div>
                 <select className='form-input' {...register('tag')}>
-                    <option value="investment" defaultValue>Investment</option>
-                    <option value="expense">Expense</option>
+                    <option value="expense" defaultValue>Expense</option>
+                    <option value="investment">Investment</option>
                     <option value="savings">Savings</option>
                 </select>
                 <select className='form-input' {...register('type')}>
