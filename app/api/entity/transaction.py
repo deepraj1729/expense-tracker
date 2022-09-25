@@ -10,6 +10,7 @@ class Transaction:
     def __init__(self):
         #dependency
         self.collection = transaction_collection
+        self.controller = TransactionController()
 
         #Fields
         self._id = None
@@ -23,11 +24,29 @@ class Transaction:
 
     def getByID(self,id:str):
         return TransSchema(self.collection.find({"_id":ObjectId(id)}))
+    
+    def getDashboard(self,month:str,year:str):
+        if year is None and  month is not None:
+            return {
+                "status":"failure",
+                "message":"Pass year as query params"
+                }
+        
+        elif year is None and month is None:
+            #Overall Transactions
+            all_transactions = self.getAll()
+            return self.controller.getOverallDashboard(transaction_list=all_transactions)
 
-    def getDashboardByMonth(self,month:str):
-        controller = TransactionController()
-        monthly_transactions = TransSchema(self.collection.find({"trans_month":month}))
-        return controller.getTransactionData(month=month,transactionList=monthly_transactions)
+        elif month is None:
+            #Yearly Transactions
+            yearly_transactions = TransSchema(self.collection.find({"trans_year":year}))
+            return self.controller.getYearlyDashboard(year=year,transaction_list=yearly_transactions)
+
+        else:
+            #Monthly Transactions
+            monthly_transactions = TransSchema(self.collection.find({"trans_month":month,"trans_year":year}))
+            return self.controller.getMonthlyDashboard(month=month,year=year,transaction_list=monthly_transactions)
+
 
     def getAll(self):
         return TransSchema(self.collection.find())

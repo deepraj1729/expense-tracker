@@ -12,23 +12,15 @@ dashboard_router = APIRouter()
 # Overview & Analysis
 ######################################################################################
 
-@dashboard_router.get("/dashboard/all")
-async def getOverallDashboard():
-    return ResponseBody(
-        status="200 ok",
-        message="Overall Dashbaord",
-        data={"db_url":DB_CONN_URL,"net_expense":120000,"net_invested":135000,"net_savings":65000}
-    )
 
-
-
-@dashboard_router.get("/dashboard/{month}")
-async def getAnalysis(month:str):
+@dashboard_router.get("/dashboard/")
+async def getDashboard(year:str=None,month:str=None):
     entity = Transaction()
-    data = entity.getDashboardByMonth(month)
+    data = entity.getDashboard(month=month,year=year)
+    del entity
 
     return ResponseBody(
         status="200 ok",
-        message="All the transactions",
+        message=data["message"],
         data=data
     )

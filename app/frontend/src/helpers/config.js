@@ -25,7 +25,8 @@ function getCurrentDateAndMonth(){
     const month_list = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
     const curr_date = new Date();
     const curr_month = month_list[curr_date.getMonth()];
-    return {curr_date, curr_month, month_list}
+    const curr_year = curr_date.getFullYear()
+    return {curr_date,curr_month,curr_year,month_list}
 }
 
 function handleCategory(data){

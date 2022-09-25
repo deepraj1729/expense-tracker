@@ -6,8 +6,7 @@ import { getCurrentDateAndMonth } from '../helpers/config';
 
 export default function Form() {
   const {register,handleSubmit,resetField} = useForm();
-  const [addTransaction] = api.useAddTransactionMutation();
-  const {curr_date, curr_month, month_list} = getCurrentDateAndMonth();  
+  const [addTransaction] = api.useAddTransactionMutation();  
 
   const handleDate = (date) => {
     let date_arr = date.split('-');

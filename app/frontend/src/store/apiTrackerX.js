@@ -9,7 +9,7 @@ export const apiTrackerX = createApi({
     endpoints: builder => ({
         getAnalysis : builder.query({
             // get: '/analyze/{month_name}'
-            query: (month_name) => "/dashboard/"+month_name,
+            query: ({month,year}) => `/dashboard/?month=${month}&year=${year}`,
             providesTags: ['transaction']
         }),
 
@@ -26,7 +26,7 @@ export const apiTrackerX = createApi({
         deleteTransaction : builder.mutation({
             // delete: 'delete/{id}
             query: (transactionID) => ({
-                url: "/transaction/"+transactionID,
+                url: `/transaction/${transactionID}`,
                 method: "DELETE"
             }),
             invalidatesTags: ['transaction']

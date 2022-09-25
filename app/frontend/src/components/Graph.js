@@ -11,11 +11,11 @@ import { getDashboard,getGraphConfig,inrFormatting,getCurrentDateAndMonth } from
 Chart.register(ArcElement);
 
 
-const RenderUI = ({month,handleChange}) =>{
-    const {curr_date, curr_month, month_list} = getCurrentDateAndMonth()
+const RenderUI = (props) =>{
+    const {month,year,handleChange} = props
+    const {curr_date, curr_month, curr_year, month_list} = getCurrentDateAndMonth()
 
-    // console.log("Current-month"+curr_month + "  Month selected: "+month);
-    const { data, isFetching , isSuccess, isError } = api.useGetAnalysisQuery(month);
+    const { data, isFetching , isSuccess, isError } = api.useGetAnalysisQuery({month:month,year:year});
     let msg = '';
     
     if(isFetching){
@@ -33,6 +33,8 @@ const RenderUI = ({month,handleChange}) =>{
             </>            
         );
     }else if(isSuccess){
+        console.log("year: ",year);
+        console.log("data: ",data);
         let labelData = data.data.dashboard;
         const dashboard = getDashboard(labelData);
         const config = getGraphConfig(labelData);
@@ -105,20 +107,20 @@ const RenderUI = ({month,handleChange}) =>{
 
 
 export default function Graph() {
-    const {curr_date, curr_month, month_list} = getCurrentDateAndMonth()
+    const {curr_date, curr_month, curr_year, month_list} = getCurrentDateAndMonth()
     const [month, setMonth] = useState(curr_month);
-    // const [month, setMonth] = useState("aug");
+    const year = curr_year;
 
     const handleChange = (e)=> {
         const month_name = e.target.value;
         if(!month_name) return;
         setMonth(month_name);  
         return (
-            <RenderUI month={month} handleChange={handleChange}/>
+            <RenderUI month={month} year={year} handleChange={handleChange}/>
         ) 
     }
 
     return (
-        <RenderUI month={month} handleChange={handleChange}/>
+        <RenderUI month={month} year={year} handleChange={handleChange}/>
     )    
 }
