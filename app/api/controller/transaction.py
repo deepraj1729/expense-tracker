@@ -5,17 +5,29 @@ class TransactionController:
     def __init__(self):
         pass
 
-    # def createResponseDict(self,data):
-    #     return ({
-    #             "dashboard":{
-    #                 "earnings": round(netEarnings, 2),
-    #                 "expenses": round(netExpenses,2),
-    #                 "investments": round(netInvested,2),
-    #                 "savings": round(netSavings,2)
-    #                 },
-    #             "transactions":transaction_list,
-    #             "message":"Yearly Dashboard for {}".format(year)
-    #     })
+    def sendResponseDict(self,data,default=False):
+        if default == True:
+            return ({
+                "dashboard":{
+                    "earnings": round(0, 2),
+                    "expenses": round(0,2),
+                    "investments": round(0,2),
+                    "savings": round(0,2)
+                    },
+                "transactions":[],
+                "message":"No Transactions found"
+            })
+
+        return ({
+                "dashboard":{
+                    "earnings": round(data["earnings"], 2),
+                    "expenses": round(data["expenses"],2),
+                    "investments": round(data["investments"],2),
+                    "savings": round(data["savings"],2)
+                    },
+                "transactions":data["transactions"],
+                "message":data["message"]
+        })
 
     def getTransactionData(self,transaction_list:list):
         netEarnings = 0
@@ -69,47 +81,41 @@ class TransactionController:
     def getYearlyDashboard(self,year:str,transaction_list:list):
         if self.isListNull(transaction_list) == False:
             netEarnings,netExpenses,netInvested,netSavings = self.getTransactionData(transaction_list)
-            dashboard_info = {
-                "year":year,
-                "dashboard":{
-                    "earnings": round(netEarnings, 2),
-                    "expenses": round(netExpenses,2),
-                    "investments": round(netInvested,2),
-                    "savings": round(netSavings,2)
-                    },
-                "transactions":transaction_list,
+            return self.sendResponseDict({
+                "earnings":netEarnings,
+                "expenses":netExpenses,
+                "investments":netInvested,
+                "savings":netSavings,
+                "transactions": transaction_list,
                 "message":"Yearly Dashboard for {}".format(year)
-            }
-            return dashboard_info
-    
+            })
+        else:
+            return self.sendResponseDict(data=None,default=True)
+
     def getMonthlyDashboard(self,month:str,year:str,transaction_list:list):
         if self.isListNull(transaction_list) == False:
             netEarnings,netExpenses,netInvested,netSavings = self.getTransactionData(transaction_list)
-            dashboard_info = {
-                "month":month,
-                "year":year,
-                "dashboard":{
-                    "earnings": round(netEarnings, 2),
-                    "expenses": round(netExpenses,2),
-                    "investments": round(netInvested,2),
-                    "savings": round(netSavings,2)
-                    },
-                "transactions":transaction_list,
+            return self.sendResponseDict({
+                "earnings":netEarnings,
+                "expenses":netExpenses,
+                "investments":netInvested,
+                "savings":netSavings,
+                "transactions": transaction_list,
                 "message":"Monthly Dashboard for month:{}  year:{}".format(month,year)
-            }
-            return dashboard_info
+            })
+        else:
+            return self.sendResponseDict(data=None,default=True)
     
     def getOverallDashboard(self,transaction_list:list):
         if self.isListNull(transaction_list) == False:
             netEarnings,netExpenses,netInvested,netSavings = self.getTransactionData(transaction_list)
-            dashboard_info = {
-                "dashboard":{
-                    "earnings": round(netEarnings, 2),
-                    "expenses": round(netExpenses,2),
-                    "investments": round(netInvested,2),
-                    "savings": round(netSavings,2)
-                    },
-                "transactions":transaction_list,
+            return self.sendResponseDict({
+                "earnings":netEarnings,
+                "expenses":netExpenses,
+                "investments":netInvested,
+                "savings":netSavings,
+                "transactions": transaction_list,
                 "message":"Overall Dashboard"
-            }
-            return dashboard_info
+            })
+        else:
+            return self.sendResponseDict(data=None,default=True)
