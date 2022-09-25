@@ -102,8 +102,9 @@ The ports running these services on:
 ## API Documentation:
 
 > Dashboard:
-- Overall Dashboard: GET `/dashboard/all`
-- Monthly Dashboard: GET `/dashboard/{month_name}`
+- Overall Dashboard: GET `/dashboard`
+- Yearly Dashboard:  GET `/dashboard/?year={year}`
+- Monthly Dashboard: GET `/dashboard/?year={year}&month={month}`
 
 > Transactions:
 - All Transactions: GET `/transaction/all`
