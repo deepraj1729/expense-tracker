@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from models.model import ResponseBody
 from entity.transaction import Transaction
-from config.db import DB_CONN_URL
 
 
 # API Instance

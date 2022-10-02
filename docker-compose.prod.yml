@@ -21,20 +21,7 @@ services:
     
     #Environment variables
     env_file:
-      - "./app/api/.env"
-    
-    depends_on:
-      - db
-  
-  db:
-    image: mongo:latest
-    container_name: expense_db
-    ports: 
-     - "27017:27017"
-    volumes:
-      - ~/mongo/data:/data/db
-    env_file:
-      - "./app/db/.env"
+      - "./app/api/.env.prod"
   
   web:
     container_name: expense_prod_ui

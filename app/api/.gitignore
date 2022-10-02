@@ -132,3 +132,6 @@ dmypy.json
 
 #ignore db
 data/
+
+# Produnction ENV
+.env.prod
