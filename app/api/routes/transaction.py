@@ -1,7 +1,8 @@
-from fastapi import APIRouter,Request
+from fastapi import APIRouter,Request,Depends
 from models.model import ResponseBody,TransactionRequestBody
 from entity.transaction import Transaction
 from utils.migration import loadFile,OUT_FILE_PATH
+from middlewares.jwt import oauth2_scheme
 
 
 # API Instance
@@ -14,7 +15,7 @@ transaction_router = APIRouter()
 
 #Get All Transactions
 @transaction_router.get("/transaction/all")
-async def getAllTransactions():
+async def getAllTransactions(token: str = Depends(oauth2_scheme)):
     try:
         entity = Transaction()
         transactions = entity.getAll()
@@ -37,7 +38,7 @@ async def getAllTransactions():
 
 #Get Transaction by id
 @transaction_router.get("/transaction/{id}")
-async def getTransaction(id:str):
+async def getTransaction(id:str,token: str = Depends(oauth2_scheme)):
     entity = Transaction()
     transaction = entity.getByID(id)
     del entity
@@ -52,7 +53,7 @@ async def getTransaction(id:str):
 
 #Add Transaction
 @transaction_router.post("/transaction/add")
-async def addTransaction(content:TransactionRequestBody,request:Request,response_model=ResponseBody):
+async def addTransaction(content:TransactionRequestBody,request:Request,response_model=ResponseBody,token: str = Depends(oauth2_scheme)):
     try:
         entity = Transaction()
         transaction_id = entity.addOne(content.dict())
@@ -78,7 +79,7 @@ async def addTransaction(content:TransactionRequestBody,request:Request,response
 
 #Add multiple transactions 
 @transaction_router.post("/transaction/add_many")
-async def addMultipleTransaction(response_model=ResponseBody):
+async def addMultipleTransaction(response_model=ResponseBody,token: str = Depends(oauth2_scheme)):
     try:
         entity = Transaction()
         trans_data = loadFile(OUT_FILE_PATH)
@@ -102,7 +103,7 @@ async def addMultipleTransaction(response_model=ResponseBody):
 
 #Get Transactions for a month
 @transaction_router.get("/transactions/{month}")
-async def getMonthlyTransactions(month:str):
+async def getMonthlyTransactions(month:str,token: str = Depends(oauth2_scheme)):
     entity = Transaction()
     transactions = entity.getAllByMonth(month)
     del entity
@@ -117,7 +118,7 @@ async def getMonthlyTransactions(month:str):
 
 #Delete Trnasaction
 @transaction_router.delete("/transaction/{id}")
-async def deleteTransaction(id:str):
+async def deleteTransaction(id:str,token: str = Depends(oauth2_scheme)):
     entity = Transaction()
     status = entity.deleteByID(id)
     del entity
@@ -139,7 +140,7 @@ async def deleteTransaction(id:str):
 
 #Delete collection (overall transactions)
 @transaction_router.delete("/transactions")
-async def deleteAllTransactions():
+async def deleteAllTransactions(token: str = Depends(oauth2_scheme)):
     entity = Transaction()
     entity.dropCollection()
     del entity

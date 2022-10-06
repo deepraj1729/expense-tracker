@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Depends
 from models.model import ResponseBody
 from entity.transaction import Transaction
+from middlewares.jwt import oauth2_scheme,decodeJWT
 
 
 # API Instance
@@ -8,12 +9,13 @@ dashboard_router = APIRouter()
 
 
 ######################################################################################
-# Overview & Analysis
+# Dashboard
 ######################################################################################
 
-
-@dashboard_router.get("/dashboard/")
-async def getDashboard(year:str=None,month:str=None):
+@dashboard_router.get("/dashboard")
+async def getDashboard(year:str=None,month:str=None,token: str = Depends(oauth2_scheme)):
+    print("Token: ",token)
+    print("Decoded JWT: {}".format(decodeJWT(token)))
     entity = Transaction()
     data = entity.getDashboard(month=month,year=year)
     del entity
